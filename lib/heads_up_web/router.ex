@@ -27,7 +27,7 @@ defmodule HeadsUpWeb.Router do
   end
 
   def snoop(conn, _options) do
-    answer = ~w(Yes No Myabe) |> Enum.random()
+    answer = ~w(Yes No Maybe) |> Enum.random()
 
     conn = assign(conn, :answer, answer)
 
