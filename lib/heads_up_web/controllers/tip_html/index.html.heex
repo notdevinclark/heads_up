@@ -1,0 +1,9 @@
+<div class="tips">
+  <h1>Tips</h1>
+  <p>{@emojis}</p>
+  <ol>
+    <%= for tip <- @tips do %>
+      <li>{tip.text}</li>
+    <% end %>
+  </ol>
+</div>
