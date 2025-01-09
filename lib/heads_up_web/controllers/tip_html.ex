@@ -16,6 +16,9 @@ defmodule HeadsUpWeb.TipHTML do
         {@tip.text}
       </p>
     </div>
+    <div class="mt-10">
+      <a href={~p"/tips"}>← Back</a>
+    </div>
     """
   end
 end
