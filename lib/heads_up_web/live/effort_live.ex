@@ -2,17 +2,16 @@ defmodule HeadsUpWeb.EffortLive do
   use HeadsUpWeb, :live_view
 
   def mount(_params, _session, socket) do
-    responders = 0
-    minutes_per_responder = 10
-    {total_hours, total_minutes} = total_time(responders, minutes_per_responder)
+    if connected?(socket) do
+      Process.send_after(self(), :tick, 2000)
+    end
 
     socket =
       assign(socket,
-        responders: responders,
-        minutes_per_responder: 10,
-        total_hours: total_hours,
-        total_minutes: total_minutes
+        responders: 0,
+        minutes_per_responder: 10
       )
+      |> update_total_time_information()
 
     {:ok, socket}
   end
@@ -50,17 +49,13 @@ defmodule HeadsUpWeb.EffortLive do
   end
 
   def handle_event("add", %{"quantity" => quantity}, socket) do
-    new_responder_count = socket.assigns.responders + String.to_integer(quantity)
-
-    {total_hours, total_minutes} =
-      total_time(new_responder_count, socket.assigns.minutes_per_responder)
-
     socket =
-      assign(socket,
-        responders: new_responder_count,
-        total_hours: total_hours,
-        total_minutes: total_minutes
+      update(
+        socket,
+        :responders,
+        &(&1 + String.to_integer(quantity))
       )
+      |> update_total_time_information()
 
     {:noreply, socket}
   end
@@ -70,23 +65,38 @@ defmodule HeadsUpWeb.EffortLive do
         %{"minutes_per_responder" => minutes_per_responder},
         socket
       ) do
-    new_minutes = String.to_integer(minutes_per_responder)
-    {total_hours, total_minutes} = total_time(socket.assigns.responders, new_minutes)
-
     socket =
-      assign(socket,
-        minutes_per_responder: new_minutes,
-        total_hours: total_hours,
-        total_minutes: total_minutes
-      )
+      assign(socket, :minutes_per_responder, String.to_integer(minutes_per_responder))
+      |> update_total_time_information()
 
     {:noreply, socket}
   end
 
-  defp total_time(responders, minutes_per_responders) do
-    total = responders * minutes_per_responders
+  def handle_info(:tick, socket) do
+    Process.send_after(self(), :tick, 2000)
+
+    socket =
+      update(
+        socket,
+        :responders,
+        &(&1 + 3)
+      )
+      |> update_total_time_information()
+
+    {:noreply, socket}
+  end
+
+  defp update_total_time_information(socket) do
+    responders = socket.assigns.responders
+    minutes_per_responder = socket.assigns.minutes_per_responder
+
+    total = responders * minutes_per_responder
     hours = div(total, 60)
     minutes = rem(total, 60)
-    {hours, minutes}
+
+    assign(socket,
+      total_hours: hours,
+      total_minutes: minutes
+    )
   end
 end
