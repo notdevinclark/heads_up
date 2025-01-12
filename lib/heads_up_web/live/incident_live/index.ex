@@ -12,8 +12,36 @@ defmodule HeadsUpWeb.IncidentLive.Index do
   def render(assigns) do
     ~H"""
     <div class="incident-index">
+      <.headline>
+        <.icon name="hero-trophy-mini" /> 25 Incidents Resolved this Month!
+        <:taglines :let={vibe}>
+          Thanks for pitching in! {vibe}
+        </:taglines>
+        <:taglines>
+          All your help is greatly appreciated!
+        </:taglines>
+      </.headline>
+
       <div class="incidents">
         <.incident_card :for={incident <- @incidents} incident={incident} />
+      </div>
+    </div>
+    """
+  end
+
+  slot :inner_block, required: true
+  slot :taglines
+
+  def headline(assigns) do
+    assigns = assign(assigns, :emoji, ~w(😎 🫡 🤯) |> Enum.random())
+
+    ~H"""
+    <div class="headline">
+      <h1>
+        {render_slot(@inner_block)}
+      </h1>
+      <div :for={taglines <- @taglines} class="tagline">
+        {render_slot(taglines, @emoji)}
       </div>
     </div>
     """
