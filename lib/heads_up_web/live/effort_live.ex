@@ -11,7 +11,6 @@ defmodule HeadsUpWeb.EffortLive do
         responders: 0,
         minutes_per_responder: 10
       )
-      |> update_total_time_information()
 
     {:ok, socket}
   end
@@ -31,13 +30,7 @@ defmodule HeadsUpWeb.EffortLive do
         <div>
           {@minutes_per_responder} Minutes
         </div>
-        =
-        <div :if={@total_hours > 0}>
-          {@total_hours} Hours
-        </div>
-        <div :if={@total_hours == 0 || @total_minutes > 0}>
-          {@total_minutes} Minutes
-        </div>
+        = <.total_time responders={@responders} minutes_per_responder={@minutes_per_responder} />
       </section>
 
       <form phx-submit="set-minutes-per-responder">
@@ -55,7 +48,6 @@ defmodule HeadsUpWeb.EffortLive do
         :responders,
         &(&1 + String.to_integer(quantity))
       )
-      |> update_total_time_information()
 
     {:noreply, socket}
   end
@@ -67,7 +59,6 @@ defmodule HeadsUpWeb.EffortLive do
       ) do
     socket =
       assign(socket, :minutes_per_responder, String.to_integer(minutes_per_responder))
-      |> update_total_time_information()
 
     {:noreply, socket}
   end
@@ -81,22 +72,29 @@ defmodule HeadsUpWeb.EffortLive do
         :responders,
         &(&1 + 3)
       )
-      |> update_total_time_information()
 
     {:noreply, socket}
   end
 
-  defp update_total_time_information(socket) do
-    responders = socket.assigns.responders
-    minutes_per_responder = socket.assigns.minutes_per_responder
+  attr :responders, :integer, required: true
+  attr :minutes_per_responder, :integer, required: true
 
-    total = responders * minutes_per_responder
-    hours = div(total, 60)
-    minutes = rem(total, 60)
+  def total_time(assigns) do
+    total = assigns.responders * assigns.minutes_per_responder
 
-    assign(socket,
-      total_hours: hours,
-      total_minutes: minutes
-    )
+    assigns =
+      assign(assigns,
+        hours: div(total, 60),
+        minutes: rem(total, 60)
+      )
+
+    ~H"""
+    <div :if={@hours > 0}>
+      {@hours} Hours
+    </div>
+    <div :if={@hours == 0 || @minutes > 0}>
+      {@minutes} Minutes
+    </div>
+    """
   end
 end
