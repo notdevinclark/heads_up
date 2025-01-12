@@ -33,10 +33,10 @@ defmodule HeadsUpWeb.EffortLive do
         = <.total_time responders={@responders} minutes_per_responder={@minutes_per_responder} />
       </section>
 
-      <form phx-submit="set-minutes-per-responder">
-        <label>Minutes Per Responder:</label>
-        <input type="number" name="minutes_per_responder" value={@minutes_per_responder} min="1" />
-      </form>
+      <.set_minute_form
+        minutes_per_responder={@minutes_per_responder}
+        phx-submit="set-minutes-per-responder"
+      />
     </div>
     """
   end
@@ -95,6 +95,18 @@ defmodule HeadsUpWeb.EffortLive do
     <div :if={@hours == 0 || @minutes > 0}>
       {@minutes} Minutes
     </div>
+    """
+  end
+
+  attr :minutes_per_responder, :integer, required: true
+  attr :rest, :global
+
+  def set_minute_form(assigns) do
+    ~H"""
+    <form {@rest}>
+      <label>Minutes Per Responder:</label>
+      <input type="number" name="minutes_per_responder" value={@minutes_per_responder} min="1" />
+    </form>
     """
   end
 end
