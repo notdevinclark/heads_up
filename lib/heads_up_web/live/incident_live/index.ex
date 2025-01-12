@@ -29,24 +29,6 @@ defmodule HeadsUpWeb.IncidentLive.Index do
     """
   end
 
-  slot :inner_block, required: true
-  slot :taglines
-
-  def headline(assigns) do
-    assigns = assign(assigns, :emoji, ~w(😎 🫡 🤯) |> Enum.random())
-
-    ~H"""
-    <div class="headline">
-      <h1>
-        {render_slot(@inner_block)}
-      </h1>
-      <div :for={taglines <- @taglines} class="tagline">
-        {render_slot(taglines, @emoji)}
-      </div>
-    </div>
-    """
-  end
-
   attr :incident, HeadsUp.Incident, required: true
 
   def incident_card(assigns) do
