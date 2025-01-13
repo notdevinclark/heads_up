@@ -29,6 +29,7 @@ defmodule HeadsUp.Tips do
     |> String.to_integer()
     |> get_tip()
   end
+
   def get_tip(id) when is_integer(id) do
     list_tips()
     |> Enum.find(fn tip ->
