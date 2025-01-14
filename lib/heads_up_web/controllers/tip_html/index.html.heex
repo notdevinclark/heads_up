@@ -4,9 +4,9 @@
   <ol>
     <%= for tip <- @tips do %>
       <li>
-        <a href={~p"/tips/#{tip.id}"}>
+        <.link navigate={~p"/tips/#{tip}"}>
           {tip.text}
-        </a>
+        </.link>
       </li>
     <% end %>
   </ol>
