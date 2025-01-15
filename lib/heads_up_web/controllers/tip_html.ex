@@ -13,7 +13,7 @@ defmodule HeadsUpWeb.TipHTML do
     <div class="tips">
       <h1>You Like a Tip, {@answer}</h1>
       <p>
-        {@tip.text}
+        {@tip.description}
       </p>
     </div>
     <div class="mt-10">

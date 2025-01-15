@@ -1,31 +1,27 @@
-defmodule HeadsUp.Tip do
-  defstruct [:id, :text]
-end
-
 defmodule HeadsUp.Tips do
-  alias HeadsUp.Tip
+  alias HeadsUp.Tips.Tip
 
   def list_tips() do
     [
       %Tip{
         id: 1,
-        text: "Seven Up 7️⃣⬆️"
+        description: "Seven Up 7️⃣⬆️"
       },
       %Tip{
         id: 2,
-        text: "Make Tip Number 1 Yours 👕"
+        description: "Make Tip Number 1 Yours 👕"
       },
       %Tip{
         id: 3,
-        text: "Slow is smooth, and smooth is fast! 🐢"
+        description: "Slow is smooth, and smooth is fast! 🐢"
       },
       %Tip{
         id: 4,
-        text: "Working with a buddy is always a smart move. 👯"
+        description: "Working with a buddy is always a smart move. 👯"
       },
       %Tip{
         id: 5,
-        text: "Take it easy and enjoy! 😊"
+        description: "Take it easy and enjoy! 😊"
       }
     ]
   end
