@@ -17,7 +17,7 @@ defmodule HeadsUpWeb.TipHTML do
       </p>
     </div>
     <div class="mt-10">
-      <.link navigate={~p"/tips"}>← Back</.link>
+      <.back navigate={~p"/tips"}>Back</.back>
     </div>
     """
   end
