@@ -39,7 +39,9 @@ defmodule HeadsUpWeb.IncidentLive.Show do
         </section>
       </div>
       <div class="activity">
-        <div class="left"></div>
+        <div class="left">
+          <.back navigate={~p"/incidents"}>Back</.back>
+        </div>
         <div class="right">
           <.urgent_incidents incidents={@urgent_incidents} />
         </div>

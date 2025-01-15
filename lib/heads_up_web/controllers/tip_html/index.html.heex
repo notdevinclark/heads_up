@@ -5,7 +5,7 @@
     <%= for tip <- @tips do %>
       <li>
         <.link navigate={~p"/tips/#{tip}"}>
-          {tip.text}
+          {tip.description}
         </.link>
       </li>
     <% end %>
