@@ -12,6 +12,7 @@
 
 alias HeadsUp.Repo
 alias HeadsUp.Incidents.Incident
+alias HeadsUp.Tips.Tip
 
 %Incident{
   name: "Lost Dog",
@@ -142,5 +143,35 @@ alias HeadsUp.Incidents.Incident
   priority: 3,
   status: :canceled,
   image_path: "/images/suspicious-vehicle.jpg"
+}
+|> Repo.insert!()
+
+%Tip{
+  id: 1,
+  description: "Seven Up 7️⃣⬆️"
+}
+|> Repo.insert!()
+
+%Tip{
+  id: 2,
+  description: "Make Tip Number 1 Yours 👕"
+}
+|> Repo.insert!()
+
+%Tip{
+  id: 3,
+  description: "Slow is smooth, and smooth is fast! 🐢"
+}
+|> Repo.insert!()
+
+%Tip{
+  id: 4,
+  description: "Working with a buddy is always a smart move. 👯"
+}
+|> Repo.insert!()
+
+%Tip{
+  id: 5,
+  description: "Take it easy and enjoy! 😊"
 }
 |> Repo.insert!()
