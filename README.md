@@ -1,4 +1,8 @@
 # HeadsUp
+This application is the product of following exercises from the [Pragmatic
+Studios](https://pragmaticstudio.com)'s [Full Stack Phoenix Course](https://pragmaticstudio.com/courses/phoenix). 
+I also tried to add my own twist to it in places so that it wouldn't be an exact
+one for one of the results of following the exercises.
 
 To start your Phoenix server:
 
